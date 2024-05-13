@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import { Outfit, Caveat } from "next/font/google";
 import "./globals.css";
 
-export const outfit = Outfit({ 
+const outfit = Outfit({ 
   subsets: ["latin"],
   display: 'swap',
   variable: "--font-outfit",
 });
 
-export const caveat = Caveat({ 
-  subsets: ["latin"],
+const caveat = Caveat({ 
+  subsets: ["latin"], 
   display: 'swap',
   variable: "--font-caveat",
  });
