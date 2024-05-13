@@ -9,7 +9,7 @@ const outfit = Outfit({
 });
 
 const caveat = Caveat({ 
-  subsets: ["latin"],
+  subsets: ["latin"], 
   display: 'swap',
   variable: "--font-caveat",
  });
