@@ -1,5 +1,6 @@
+import DoctorList from "@/components/DoctorList";
 import Hero from "@/components/frontend/Hero";
-import TabbedSection from "@/components/frontend/TabbedSection";
+import TabbedSection from "@/components/frontend/tabbed/TabbedSection";
 
 
 export default function Home() {
@@ -7,6 +8,7 @@ export default function Home() {
     <main className="mx-auto max-w-screen-xl">
       <Hero/>
       <TabbedSection/>
+      <DoctorList/>
     </main>
   );
 }

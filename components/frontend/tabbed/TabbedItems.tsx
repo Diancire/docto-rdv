@@ -1,7 +1,7 @@
 "use client";
 import { Tabs } from "flowbite-react";
-import ServiceList from "./services/ServiceList";
-import LinkCards from "./doctors/LinkCards";
+import ServiceList from "../services/ServiceList";
+import LinkCards from "../doctors/LinkCards";
 import { FaTooth, FaEye } from "react-icons/fa";
 import { FaHeartPulse, FaBrain, FaUserDoctor } from "react-icons/fa6";
 import { GiKneeCap, GiBrain } from "react-icons/gi";
