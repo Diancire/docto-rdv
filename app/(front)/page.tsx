@@ -9,6 +9,7 @@ export default function Home() {
       <Hero/>
       <TabbedSection/>
       <DoctorList/>
+      <DoctorList className="bg-white py-8 lg:py-24" title="Consultation en présentiel" isInPerson={true}/>
     </main>
   );
 }

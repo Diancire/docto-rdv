@@ -4,20 +4,51 @@ import ToggleButton from './frontend/forms/ToggleButton'
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
 import DoctorCard from './DoctorCard'
+import { Map } from 'lucide-react'
+import DoctorsListCarousel from './DoctorsListCarousel'
 
-function DoctorList() {
+function DoctorList({
+  title="Téléconsultation Généraliste", 
+  isInPerson, 
+  className="bg-blue-50 py-8 lg:py-24",
+}:{
+  title:string;
+  isInPerson?:boolean;
+  className?:string
+  }) {
+    const doctors = [
+      {
+        name:"John"
+      },
+      {
+        name:"John"
+      },
+      {
+        name:"John"
+      },
+      {
+        name:"John"
+      },
+    ]
   return (
-    <div className='bg-blue-50 py-8 lg:py-24'>
+    <div className={className}>
       <div className='max-w-6xl mx-auto'>
-        <SectionHeading title='Téléconsultation Généraliste'/>
+        <SectionHeading title={title}/>
         <div className="py-4 flex items-center justify-between">
-          <ToggleButton/>
+          {isInPerson?(
+            <Link href="#" className='flex items-center text-blue-500 font-semibold'>
+              <Map className='mr-2 flex-shrink-0 w-4 h-4'/>
+              <span>Vue de la carte</span>
+            </Link>
+          ):(
+            <ToggleButton/>
+          )}
           <Link href="#">
             <Button variant="outline">Voir tout</Button>
           </Link>
         </div>
         <div className='py-6'>
-          <DoctorCard/>
+          <DoctorsListCarousel doctors={doctors} isInPerson={isInPerson}/>
         </div>
       </div>
     </div>
