@@ -8,9 +8,9 @@ import { Map } from 'lucide-react'
 import DoctorsListCarousel from './DoctorsListCarousel'
 
 function DoctorList({
-  title="Téléconsultation Généraliste", 
+  title="Téléconsultation généraliste", 
   isInPerson, 
-  className="bg-blue-50 py-8 lg:py-24",
+  className="bg-blue-50 px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16",
 }:{
   title:string;
   isInPerson?:boolean;

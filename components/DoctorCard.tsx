@@ -26,7 +26,7 @@ function DoctorCard({isInPerson=false}:{isInPerson?:boolean}) {
   ]
   return (
     <div className='border border-gray-200 bg-white inline-flex flex-col py-8 px-3 rounded-md hover:border-blue-400 duration-300 transition-all w-full'>
-      <Link href="#">
+      <Link href="/doctors/slug">
         <h3 className='uppercase font-bold text-xl tracking-widest'>Name</h3>
         {isInPerson && 
           (<p className='py-3'>Location</p>
@@ -65,7 +65,7 @@ function DoctorCard({isInPerson=false}:{isInPerson?:boolean}) {
             )
             })
           }
-          <Link href="#" className='bg-blue-900 text-white text-sm py-2 px-3 text-center'>Plus</Link>
+          <Link href="/doctors/slug" className='bg-blue-900 text-white text-sm py-2 px-3 text-center'>Plus</Link>
         </div>
       </div>
     </div>
