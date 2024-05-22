@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import DoctorDetails from '@/components/DoctorDetails'
+import FixedBookButton from '@/components/FixedBookButton'
 
 function page() {
   return (
@@ -28,10 +29,10 @@ function page() {
                 </div>
             </div>
             <div className=''>
-
                 <DoctorDetails/>
             </div>
-         </div> 
+         </div>
+         <FixedBookButton/>
     </div>
   )
 }
