@@ -12,6 +12,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
 import { Button } from "@/components/ui/button"
+import Link from 'next/link'
 
 function classNames(...classes:any) {
   return classes.filter(Boolean).join(' ')
@@ -52,7 +53,7 @@ export default function Navbar() {
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <Button>
-            <a href="#">
+            <a href="/login">
               Connexion <span aria-hidden="true">&rarr;</span>
             </a>
           </Button>
@@ -99,11 +100,11 @@ export default function Navbar() {
               </div>
               <div className="py-6">
                 <Button>
-                  <a
-                    href="#"
+                  <Link
+                    href="/login"
                   >
                     Connexion
-                  </a>
+                  </Link>
                 </Button>
               </div>
             </div>

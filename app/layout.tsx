@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit, Caveat } from "next/font/google";
 import "./globals.css";
+import Providers from "@/components/Providers";
 
 const outfit = Outfit({ 
   subsets: ["latin"],
@@ -26,7 +27,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" className={`${outfit.variable} ${caveat.variable}`}>
-      <body>{children}</body>
+      <body>
+        <Providers>
+          {children}
+        </Providers>
+      </body>
     </html>
   );
 }
