@@ -5,9 +5,16 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { LoginInputProps } from "@/types/types";
 import TextInput from "../formInputs/TextInput";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+import { Alert } from "flowbite-react";
+import { HiInformationCircle } from "react-icons/hi";
 
 export default function LoginForm() {
-    const [isLoading, setIsLoading]=useState(false)
+    const [isLoading, setIsLoading]=useState(false);
+    const [showNotification, setShowNotification]=useState(false);
+    const router = useRouter()
 
     const {
         register, 
@@ -17,7 +24,31 @@ export default function LoginForm() {
     } = useForm<LoginInputProps>();
 
     async function onSubmit(data: LoginInputProps) {
-        console.log(data);
+        try {
+            setIsLoading(true);
+            console.log("Attempting to sign in with credentials:", data);
+            const loginData = await signIn("credentials", {
+              ...data,
+              redirect: false,
+            });
+            console.log("SignIn response:", loginData);
+            if (loginData?.error) {
+                setIsLoading(false);
+                toast.error("Sign-in error: Check your credentials");
+                setShowNotification(true);
+            } else {
+                // Sign-in was successful
+                setShowNotification(false);
+                reset();
+                setIsLoading(false);
+                toast.success("Login Successful");
+                router.push("/dashboard");
+            }
+        } catch (error) {
+            setIsLoading(false);
+            console.error("Network Error:", error);
+            toast.error("Its seems something is wrong with your Network");
+        }
     }
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -35,6 +66,12 @@ export default function LoginForm() {
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                {showNotification && (
+                    <Alert color="failure" icon={HiInformationCircle}>
+                    <span className="font-medium">Sign-in error!</span> Please Check
+                    your credentials
+                    </Alert>
+                )}
                 <TextInput
                     label="Email"
                     register={register}
@@ -50,7 +87,7 @@ export default function LoginForm() {
                     errors={errors}
                 />
                 <div>
-                    <SubmitButton title="S'inscrire" isLoading={isLoading} loadingTitle="En cours..."/>
+                    <SubmitButton title="Connexion" isLoading={isLoading} loadingTitle="En cours..."/>
                 </div>
             </form>
 

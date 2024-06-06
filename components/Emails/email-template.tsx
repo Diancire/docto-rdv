@@ -10,9 +10,10 @@ import {
   Preview,
   Section,
   Text,
+  Tailwind,
 } from "@react-email/components";
 interface EmailTemplateProps {
-  name?: string;
+  firstName?: string;
   token: number;
   linkText: string;
   message: string;
@@ -21,7 +22,7 @@ interface EmailTemplateProps {
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
  
 export const EmailTemplate = ({
-  name = "",
+  firstName = "",
   token,
   linkText,
   message,
@@ -29,96 +30,46 @@ export const EmailTemplate = ({
   <Html>
     <Head />
     <Preview>{linkText}</Preview>
-    <Body style={main}>
-      <Container style={container}>
-        <Img
-          src={`${baseUrl}/static/logo.png`}
-          width="32"
-          height="32"
-          alt="Claridy"
-        />
- 
-        <Text style={title}>
-          <strong>@{name}</strong>, thank you for Joining Us
-        </Text>
- 
-        <Section style={section}>
-          <Text style={text}>
-            Hey <strong>{name}</strong>!
-          </Text>
-          <Text style={text}>{message}</Text>
- 
-          <Button style={button}>{token}</Button>
-          <Text style={text}>
-            If you have any questions, feel free to reach out.
-          </Text>
-        </Section>
-        <Text style={links}>
-          <Link style={link}>Your security audit log</Link> ・{" "}
-          <Link style={link}>Contact support</Link>
-        </Text>
- 
-        <Text style={footer}>
-          GitHub, Inc. ・88 Colin P Kelly Jr Street ・San Francisco, CA 94107
-        </Text>
-      </Container>
-    </Body>
+      <Tailwind>
+        <Body className="bg-white text-gray-900 font-sans">
+          <Container className="w-[480px] mx-auto p-5 pb-12">
+            <Img
+              src={`${baseUrl}/static/logo.png`}
+              width="32"
+              height="32"
+              alt="Claridy"
+              className="mb-4"
+            />
+
+            <Text className="text-2xl font-bold leading-snug">
+              <strong>@{firstName}</strong>, thank you for Joining Us
+            </Text>
+
+            <Section className="p-6 border border-gray-300 rounded-md text-center my-6">
+              <Text className="mb-2 text-left">
+                Hey <strong>{firstName}</strong>!
+              </Text>
+              <Text className="mb-2 text-left">{message}</Text>
+
+              <Button className="text-2xl bg-green-600 text-white leading-snug rounded-md py-3 px-6">
+                {token}
+              </Button>
+              <Text className="mb-2 text-left">
+                If you have any questions, feel free to reach out.
+              </Text>
+            </Section>
+            <Text className="text-center">
+              <Link className="text-blue-600 text-xs">Your security audit log</Link> ・{" "}
+              <Link className="text-blue-600 text-xs">Contact support</Link>
+            </Text>
+
+            <Text className="text-gray-500 text-xs text-center mt-15">
+              GitHub, Inc. ・88 Colin P Kelly Jr Street ・San Francisco, CA 94107
+            </Text>
+          </Container>
+        </Body>
+      </Tailwind>
   </Html>
 );
  
 export default EmailTemplate;
- 
-const main = {
-  backgroundColor: "#ffffff",
-  color: "#24292e",
-  fontFamily:
-    '-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji"',
-};
- 
-const container = {
-  width: "480px",
-  margin: "0 auto",
-  padding: "20px 0 48px",
-};
- 
-const title = {
-  fontSize: "24px",
-  lineHeight: 1.25,
-};
- 
-const section = {
-  padding: "24px",
-  border: "solid 1px #dedede",
-  borderRadius: "5px",
-  textAlign: "center" as const,
-};
- 
-const text = {
-  margin: "0 0 10px 0",
-  textAlign: "left" as const,
-};
- 
-const button = {
-  fontSize: "24px",
-  backgroundColor: "#28a745",
-  color: "#fff",
-  lineHeight: 1.5,
-  borderRadius: "0.5em",
-  padding: "0.75em 1.5em",
-};
- 
-const links = {
-  textAlign: "center" as const,
-};
- 
-const link = {
-  color: "#0366d6",
-  fontSize: "12px",
-};
- 
-const footer = {
-  color: "#6a737d",
-  fontSize: "12px",
-  textAlign: "center" as const,
-  marginTop: "60px",
-};

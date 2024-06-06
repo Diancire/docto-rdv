@@ -10,7 +10,8 @@ import { UserRole } from "@prisma/client";
 import toast from "react-hot-toast";
 
 export default function RegisterForm({role="USER"}:{role?:UserRole}) {
-    const [isLoading, setIsLoading]=useState(false)
+    const [isLoading, setIsLoading]=useState(false);
+    const [passwordError, setPasswordError] = useState<string | null>(null);
 
     const {
         register, 
@@ -19,13 +20,42 @@ export default function RegisterForm({role="USER"}:{role?:UserRole}) {
         formState:{ errors }
     } = useForm<RegisterInputProps>();
 
+    const validatePassword = (password: string): string | boolean => {
+        const minLength = 12;
+        const hasUpperCase = /[A-Z]/.test(password);
+        const hasLowerCase = /[a-z]/.test(password);
+        const hasNumber = /\d/.test(password);
+        const hasSpecialChar = /[-+!*$@%_#\)]/.test(password);
+    
+        if (password.length < minLength) {
+            return `Le mot de passe doit comporter au moins ${minLength} caractères.`;
+        }
+        if (!hasUpperCase) {
+            return "Le mot de passe doit comporter au moins une lettre majuscule.";
+        }
+        if (!hasLowerCase) {
+            return "Le mot de passe doit comporter au moins une lettre minuscule.";
+        }
+        if (!hasNumber) {
+            return "Le mot de passe doit comporter au moins un chiffre.";
+        }
+        if (!hasSpecialChar) {
+            return "Le mot de passe doit comporter au moins un caractère spécial: -+!*$@%_#)";
+        }
+        return true;
+    };
+
     async function onSubmit(data: RegisterInputProps) {
-        // console.log(data);
+        const passwordError = validatePassword(data.password);
+        if (typeof passwordError === "string") {
+            setPasswordError(passwordError);
+            return;
+        }
         setIsLoading(true);
         data.role = role;
         try {
             const user = await createUser(data);
-            if(user && user.status===null) {
+            if(user && user.status=== 200) {
                 console.log("User created successfully");
                 reset();
                 setIsLoading(false);
@@ -89,9 +119,20 @@ export default function RegisterForm({role="USER"}:{role?:UserRole}) {
                         name="password"
                         type="password"
                         errors={errors}
+                        validate={validatePassword}
                     />
+                    {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
                     <div>
-                        <SubmitButton title="Connexion" isLoading={isLoading} loadingTitle="En cours..."/>
+                        <p>Votre mot de passe doit contenir 12 caractères minimum:</p>
+                        <ul>
+                            <li>- Une lettre majuscule</li>
+                            <li>- Une lettre minuscule</li>
+                            <li>- Un chiffre</li>
+                            <li>- Un caractère spécial: -+!*$@%_#)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <SubmitButton title="S'inscrire" isLoading={isLoading} loadingTitle="En cours..."/>
                     </div>
                 </form>
                 <p className="mt-10 text-center text-sm text-gray-500">

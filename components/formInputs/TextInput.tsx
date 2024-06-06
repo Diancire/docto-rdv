@@ -6,9 +6,10 @@ type TextInputProps={
     name: string;
     errors: any;
     type?: string;
+    validate?: (value: string) => boolean | string;
 }
 
-function TextInput({label, register, name, errors, type="text"}:TextInputProps) {
+function TextInput({label, register, name, errors, type="text", validate}:TextInputProps) {
   return (
     <div>
         <label htmlFor={`${name}`} className="block text-sm font-medium leading-6 text-gray-900">
@@ -16,7 +17,10 @@ function TextInput({label, register, name, errors, type="text"}:TextInputProps) 
         </label>
         <div className="mt-2">
             <input
-                {...register(`${name}`, { required: true })}
+                {...register(`${name}`, { 
+                    required: true,
+                    validate: validate ? validate : undefined,
+                })}
                 id={`${name}`}
                 name={`${name}`}
                 type={type}
