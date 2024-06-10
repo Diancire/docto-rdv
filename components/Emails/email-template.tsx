@@ -42,12 +42,12 @@ export const EmailTemplate = ({
             />
 
             <Text className="text-2xl font-bold leading-snug">
-              <strong>@{firstName}</strong>, thank you for Joining Us
+              <strong>@{firstName}</strong>, merci de nous rejoindre
             </Text>
 
             <Section className="p-6 border border-gray-300 rounded-md text-center my-6">
               <Text className="mb-2 text-left">
-                Hey <strong>{firstName}</strong>!
+                Salut <strong>{firstName}</strong>!
               </Text>
               <Text className="mb-2 text-left">{message}</Text>
 
@@ -55,7 +55,7 @@ export const EmailTemplate = ({
                 {token}
               </Button>
               <Text className="mb-2 text-left">
-                If you have any questions, feel free to reach out.
+                Si vous avez des questions, n'hésitez pas à nous contacter.
               </Text>
             </Section>
             <Text className="text-center">

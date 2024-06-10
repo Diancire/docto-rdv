@@ -4,19 +4,26 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import TextInput from "../formInputs/TextInput";
 import SubmitButton from "../formInputs/SubmitButton";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createUser } from "@/actions/users";
 import { UserRole } from "@prisma/client";
 import toast from "react-hot-toast";
+import { BsEye, BsEyeSlash, BsCheck2Circle } from "react-icons/bs";
+import { IoRadioButtonOff } from "react-icons/io5";
+import { useRouter } from 'next/navigation';
 
 export default function RegisterForm({role="USER"}:{role?:UserRole}) {
     const [isLoading, setIsLoading]=useState(false);
     const [passwordError, setPasswordError] = useState<string | null>(null);
+    const [passwordType, setPasswordType] = useState("password");
+    const [confirmPasswordType, setConfirmPasswordType] = useState("password");
+    const router = useRouter();
 
     const {
         register, 
         handleSubmit, 
         reset, 
+        watch,
         formState:{ errors }
     } = useForm<RegisterInputProps>();
 
@@ -26,21 +33,17 @@ export default function RegisterForm({role="USER"}:{role?:UserRole}) {
         const hasLowerCase = /[a-z]/.test(password);
         const hasNumber = /\d/.test(password);
         const hasSpecialChar = /[-+!*$@%_#\)]/.test(password);
-    
-        if (password.length < minLength) {
-            return `Le mot de passe doit comporter au moins ${minLength} caractères.`;
+
+        if (password.length < minLength || !hasUpperCase || !hasLowerCase || !hasNumber || !hasSpecialChar) {
+            return "Le mot de passe ne respecte pas les critères de sécurité.";
         }
-        if (!hasUpperCase) {
-            return "Le mot de passe doit comporter au moins une lettre majuscule.";
-        }
-        if (!hasLowerCase) {
-            return "Le mot de passe doit comporter au moins une lettre minuscule.";
-        }
-        if (!hasNumber) {
-            return "Le mot de passe doit comporter au moins un chiffre.";
-        }
-        if (!hasSpecialChar) {
-            return "Le mot de passe doit comporter au moins un caractère spécial: -+!*$@%_#)";
+        return true;
+
+    };
+
+    const validatePasswordConfirmation = (confirmation: string): string | boolean => {
+        if (confirmation !== watch('password')) {
+            return "Les mots de passe ne correspondent pas.";
         }
         return true;
     };
@@ -55,22 +58,39 @@ export default function RegisterForm({role="USER"}:{role?:UserRole}) {
         data.role = role;
         try {
             const user = await createUser(data);
-            if(user && user.status=== 200) {
-                console.log("User created successfully");
+            if(user && user.data && user.data.id) {
                 reset();
                 setIsLoading(false);
-                toast.success("User created successfully")
+                toast.success("Compte créé avec succès")
+                router.push(`/verify-account/${user.data.id}`);
                 
             } else {
                 console.log(user.error);
             }
             reset();
             setIsLoading(false);
-            console.log(user);
         } catch (error) {
             console.log(error);
         }
     }
+    const [passwordValidations, setPasswordValidations] = useState({
+        lengthValidated: false,
+        numberValidated: false,
+        upperValidated: false,
+        lowerValidated: false,
+        specialValidated: false,
+    });
+
+    useEffect(() => {
+        const password = watch('password');
+        setPasswordValidations({
+            lengthValidated: password.length >= 12,
+            numberValidated: /\d/.test(password),
+            upperValidated: /[A-Z]/.test(password),
+            lowerValidated: /[a-z]/.test(password),
+            specialValidated: /[-+!*$@%_#]/.test(password),
+        });
+    }, [watch('password')]);
 
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -113,22 +133,61 @@ export default function RegisterForm({role="USER"}:{role?:UserRole}) {
                         type="tel"
                         errors={errors}
                     />
-                    <TextInput
-                        label="Mot de passe"
-                        register={register}
-                        name="password"
-                        type="password"
-                        errors={errors}
-                        validate={validatePassword}
-                    />
+                    <div className='relative'>
+                        <TextInput
+                            label="Mot de passe"
+                            register={register}
+                            name="password"
+                            type={passwordType}
+                            errors={errors}
+                            validate={validatePassword}
+                        />
+                        <span
+                            className='absolute right-4 top-[50px] transform -translate-y-1/2 cursor-pointer'
+                            onClick={() => setPasswordType(passwordType === 'password' ? 'text' : 'password')}>
+                            {passwordType === "password" ? <BsEye size={18}/> : <BsEyeSlash size={18}/>}
+                        </span>
+                    </div>
+                    <div className='relative'>
+                        <TextInput
+                            label="Confirmez le mot de passe"
+                            register={register}
+                            name="passwordConfirmation"
+                            type={confirmPasswordType}
+                            errors={errors}
+                            validate={validatePasswordConfirmation}
+                        />
+                        <span
+                            className='absolute right-4 top-[50px] transform -translate-y-1/2 cursor-pointer'
+                            onClick={() => setConfirmPasswordType(confirmPasswordType === 'password' ? 'text' : 'password')}>
+                            {confirmPasswordType === "password" ? <BsEye size={18}/> : <BsEyeSlash size={18}/>}
+                        </span>
+                    </div>
                     {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
+                    {errors.passwordConfirmation && <p className="text-red-500 text-sm">{errors.passwordConfirmation.message}</p>}
                     <div>
-                        <p>Votre mot de passe doit contenir 12 caractères minimum:</p>
+                        <p>Votre mot de passe doit contenir :</p>
                         <ul>
-                            <li>- Une lettre majuscule</li>
-                            <li>- Une lettre minuscule</li>
-                            <li>- Un chiffre</li>
-                            <li>- Un caractère spécial: -+!*$@%_#)</li>
+                            <li className="flex items-center">
+                                {passwordValidations.lengthValidated ? < BsCheck2Circle /> : <IoRadioButtonOff />}
+                                <span className="pl-2">12 caractères minimum</span>
+                            </li>
+                            <li className="flex items-center">
+                                {passwordValidations.numberValidated ? < BsCheck2Circle /> : <IoRadioButtonOff />}
+                                <span className="pl-2">Un chiffre (0...9)</span>
+                            </li>
+                            <li className="flex items-center">
+                                {passwordValidations.upperValidated ? < BsCheck2Circle /> : <IoRadioButtonOff />}
+                                <span className="pl-2">Une lettre majuscule (A...Z)</span>
+                            </li>
+                            <li className="flex items-center">
+                                {passwordValidations.lowerValidated ? < BsCheck2Circle /> : <IoRadioButtonOff />}
+                                <span className="pl-2">Une lettre minuscule (a...z)</span>
+                            </li>
+                            <li className="flex items-center">
+                                {passwordValidations.specialValidated ? < BsCheck2Circle /> : <IoRadioButtonOff />}
+                                <span className="pl-2">Un caractère spécial: -+!*$@%_#)</span>
+                            </li>
                         </ul>
                     </div>
                     <div>

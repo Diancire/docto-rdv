@@ -29,7 +29,7 @@ import { updateUserById } from "@/actions/users";
  
 const FormSchema = z.object({
   token: z.string().min(6, {
-    message: "Your Token must be 6 characters.",
+    message: "Votre code doit contenir 6 caractères.",
   }),
 });
  
@@ -60,26 +60,23 @@ export default function VerifyTokenForm({
         await updateUserById(id);
         setLoading(false);
         // reset();
-        toast.success("Account Verified");
+        toast.success("Compte vérifié");
         router.push("/login");
       } catch (error) {
         setLoading(false);
-        console.log(error);
       }
     } else {
       setShowNotification(true);
       setLoading(false);
     }
-    console.log(data);
   }
  
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex flex-col items-center">
         {showNotification && (
           <Alert color="failure" icon={HiInformationCircle}>
-            <span className="font-medium">Wrong Token!</span> Please Check the
-            token and Enter again
+            <span className="font-medium">Code incorrect !</span> Veuillez vérifier le code et le saisir à nouveau
           </Alert>
         )}
         <FormField
@@ -87,7 +84,7 @@ export default function VerifyTokenForm({
           name="token"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Enter Token Here</FormLabel>
+              <FormLabel>Entrez le code ici</FormLabel>
               <FormControl>
                 <InputOTP maxLength={6} {...field}>
                   <InputOTPGroup>
@@ -104,14 +101,14 @@ export default function VerifyTokenForm({
                 </InputOTP>
               </FormControl>
               <FormDescription>
-                Please enter the 6-figure pass code sent to your email.
+                Veuillez entrer le code à 6 chiffres envoyé à votre adresse e-mail.
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
  
-        <Button type="submit">Submit</Button>
+        <Button className="w-1/3" type="submit">Soumettre</Button>
       </form>
     </Form>
   );

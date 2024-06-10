@@ -10,10 +10,12 @@ import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { Alert } from "flowbite-react";
 import { HiInformationCircle } from "react-icons/hi";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
 
 export default function LoginForm() {
     const [isLoading, setIsLoading]=useState(false);
     const [showNotification, setShowNotification]=useState(false);
+    const [passwordType, setPasswordType] = useState("password");
     const router = useRouter()
 
     const {
@@ -26,28 +28,26 @@ export default function LoginForm() {
     async function onSubmit(data: LoginInputProps) {
         try {
             setIsLoading(true);
-            console.log("Attempting to sign in with credentials:", data);
             const loginData = await signIn("credentials", {
               ...data,
               redirect: false,
             });
-            console.log("SignIn response:", loginData);
             if (loginData?.error) {
                 setIsLoading(false);
-                toast.error("Sign-in error: Check your credentials");
+                toast.error("Erreur de connexion : Vérifiez vos identifiants");
                 setShowNotification(true);
             } else {
                 // Sign-in was successful
                 setShowNotification(false);
                 reset();
                 setIsLoading(false);
-                toast.success("Login Successful");
+                toast.success("Connexion réussie");
                 router.push("/dashboard");
             }
         } catch (error) {
             setIsLoading(false);
             console.error("Network Error:", error);
-            toast.error("Its seems something is wrong with your Network");
+            toast.error("Il semble qu'il y ait un problème avec votre réseau");
         }
     }
     return (
@@ -68,8 +68,7 @@ export default function LoginForm() {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 {showNotification && (
                     <Alert color="failure" icon={HiInformationCircle}>
-                    <span className="font-medium">Sign-in error!</span> Please Check
-                    your credentials
+                    <span className="font-medium">Erreur de connexion !</span> Veuillez vérifier vos identifiants
                     </Alert>
                 )}
                 <TextInput
@@ -79,13 +78,20 @@ export default function LoginForm() {
                     type="email"
                     errors={errors}
                 />
-                <TextInput
-                    label="Mot de passe"
-                    register={register}
-                    name="password"
-                    type="password"
-                    errors={errors}
-                />
+                <div className='relative'>
+                    <TextInput
+                        label="Mot de passe"
+                        register={register}
+                        name="password"
+                        type={passwordType}
+                        errors={errors}
+                    />
+                    <span
+                        className='absolute right-4 top-[50px] transform -translate-y-1/2 cursor-pointer'
+                        onClick={() => setPasswordType(passwordType === 'password' ? 'text' : 'password')}>
+                        {passwordType === "password" ? <BsEye size={18}/> : <BsEyeSlash size={18}/>}
+                    </span>
+                </div>
                 <div>
                     <SubmitButton title="Connexion" isLoading={isLoading} loadingTitle="En cours..."/>
                 </div>
