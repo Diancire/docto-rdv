@@ -1,10 +1,10 @@
 "use client"
+import React, { useState, useEffect } from "react";
 import { RegisterInputProps } from "@/types/types";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import TextInput from "../formInputs/TextInput";
 import SubmitButton from "../formInputs/SubmitButton";
-import { useState, useEffect } from "react";
 import { createUser } from "@/actions/users";
 import { UserRole } from "@prisma/client";
 import toast from "react-hot-toast";
@@ -81,8 +81,9 @@ export default function RegisterForm({role="USER"}:{role?:UserRole}) {
         specialValidated: false,
     });
 
+    const passwordValue = watch('password');
     useEffect(() => {
-        const password = watch('password');
+        const password = passwordValue;
         setPasswordValidations({
             lengthValidated: password.length >= 12,
             numberValidated: /\d/.test(password),
@@ -90,7 +91,7 @@ export default function RegisterForm({role="USER"}:{role?:UserRole}) {
             lowerValidated: /[a-z]/.test(password),
             specialValidated: /[-+!*$@%_#]/.test(password),
         });
-    }, [watch('password')]);
+    }, [passwordValue]);
 
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
