@@ -84,13 +84,15 @@ export default function RegisterForm({role="USER"}:{role?:UserRole}) {
     const passwordValue = watch('password');
     useEffect(() => {
         const password = passwordValue;
-        setPasswordValidations({
-            lengthValidated: password.length >= 12,
-            numberValidated: /\d/.test(password),
-            upperValidated: /[A-Z]/.test(password),
-            lowerValidated: /[a-z]/.test(password),
-            specialValidated: /[-+!*$@%_#]/.test(password),
-        });
+        if (password) {
+            setPasswordValidations({
+                lengthValidated: password.length >= 12,
+                numberValidated: /\d/.test(password),
+                upperValidated: /[A-Z]/.test(password),
+                lowerValidated: /[a-z]/.test(password),
+                specialValidated: /[-+!*$@%_#]/.test(password),
+            });
+        }
     }, [passwordValue]);
 
     return (
