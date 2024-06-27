@@ -25,7 +25,7 @@ export default function Navbar() {
     <header className="fixed top-0 bg-white w-full z-10 shadow-sm">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5 font-logo text-primary text-3xl font-bold">
+          <a href="/" className="-m-1.5 p-1.5 font-logo text-primary text-3xl font-bold">
             <span className="sr-only">Docto-Rdv</span>
             Docto-Rdv
           </a>
@@ -41,7 +41,7 @@ export default function Navbar() {
           </button>
         </div>
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
-          <a href="#" className="text-base font-semibold leading-6 text-gray-900 hover:text-primary">
+          <a href="/" className="text-base font-semibold leading-6 text-gray-900 hover:text-primary">
             Accueil
           </a>
           <a href="#" className="text-base font-semibold leading-6 text-gray-900 hover:text-primary">
@@ -80,7 +80,7 @@ export default function Navbar() {
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
                 <a
-                  href="#"
+                  href="/"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 hover:text-primary"
                 >
                   Accueil

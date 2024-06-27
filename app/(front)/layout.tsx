@@ -1,3 +1,4 @@
+import Footer from "@/components/frontend/Footer";
 import Navbar from "@/components/frontend/Navbar";
 import React from "react";
 
@@ -10,6 +11,7 @@ export default function Layout({
     <div>
         <Navbar/>
         {children}
+        <Footer/>
     </div>
   );
 }
