@@ -42,7 +42,7 @@ function page() {
   const faqItems: FAQItem[] = [
     {
       qn: "Comment puis-je m'inscrire sur Docto-Rdv?",
-      ans: <p>Pour vous inscrire, cliquez sur le bouton <a href="/register?role='DOCTOR'" className='text-primary hover:underline hover:underline-offset-2'>Rejoignez-nous</a> et remplissez le formulaire d'inscription.</p>
+      ans: <p>Pour vous inscrire, cliquez sur  <a href="/register?role='DOCTOR'" className='text-primary hover:underline hover:underline-offset-2'>Rejoignez-nous</a> et remplissez le formulaire d'inscription.</p>
     },
     {
       qn: "Quels sont les avantages de Docto-Rdv?",
@@ -87,7 +87,7 @@ function page() {
         <section className='py-16 px-4'>
           <div className='max-w-7xl gap-4 mx-auto grid grid-cols-1 md:grid-cols-2'>
             <Image
-              src='/stethoscope-prescription.webp'
+              src='/medical-consultation-with-tablet.webp'
               alt=''
               width={3000}
               height={2000}
