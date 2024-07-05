@@ -1,13 +1,17 @@
 'use client'
-import { Bell, Calendar, ClipboardPlus, Home, Settings } from 'lucide-react';
+import { Bell, Calendar, ClipboardPlus, Home, LogOut, PanelLeftClose, Settings } from 'lucide-react';
 import Link from 'next/link';
 import React  from 'react';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 
-const Sidebar = () => {    
+const Sidebar = () => {
+    const router = useRouter();
+    async function handleLogout() {
+        router.push("/");
+    }
     const pathname = usePathname()
     const sidebarLinks = [
         {
@@ -32,10 +36,10 @@ const Sidebar = () => {
             icon: Settings,
         },
         {
-            name: "Déconnexion",
-            path: "/logout",
-            icon: Bell,
-        },
+            name: "Page d'accueil",
+            path: "/",
+            icon: PanelLeftClose,
+        }
     ]
     return (
         <div className="hidden border-r bg-muted/40 md:block">
@@ -71,6 +75,13 @@ const Sidebar = () => {
                                 </Link>
                             )
                         })}
+                        <button
+                            onClick={handleLogout}
+                            className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-muted-foreground transition-all hover:text-primary"
+                        >
+                            <LogOut className="w-5 h-5"/>
+                            Déconnexion
+                        </button>
                     </nav>
                 </div>
             </div>
