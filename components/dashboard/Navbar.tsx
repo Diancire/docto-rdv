@@ -1,108 +1,136 @@
 "use client";
  
 import React from "react";
-import Image from "next/image";
-import { Avatar, Dropdown } from "flowbite-react";
-import { useRouter } from "next/navigation";
-import { AlignJustify, Bell, Mail, Search } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { Calendar, CircleUser, ClipboardPlus, Home, LogOut, Menu, PanelLeftClose, Search, Settings } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
+import { Button } from "../ui/button";
+import Link from "next/link";
+import { Badge } from "../ui/badge";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import { Input } from "../ui/input";
+import { cn } from '@/lib/utils';
  
 export default function Navbar() {
   const router = useRouter();
   async function handleLogout() {
     router.push("/");
   }
+  const pathname = usePathname()
+  const sidebarLinks = [
+    {
+        name: "Dashboard",
+        path: "/dashboard",
+        icon: Home,
+    },
+    {
+        name: "Mes rendez-vous",
+        path: "/dashboard/appointments",
+        icon: Calendar,
+        badgeCount: 6
+    },
+    {
+        name: "Historique médical",
+        path: "/dashboard/medical-history",
+        icon: ClipboardPlus,
+    },
+    {
+        name: "Paramètres",
+        path: "/dashboard/settings",
+        icon: Settings,
+    },
+    {
+        name: "Page d'accueil",
+        path: "/",
+        icon: PanelLeftClose,
+    }
+  ]
   return (
-    <header className="bg-white border-b border-gray-200">
-      <div className="px-4 mx-auto">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center -m-2 xl:hidden">
+    <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button
+            variant="outline"
+            size="icon"
+            className="shrink-0 md:hidden"
+          >
+            <Menu className="h-5 w-5" />
+            <span className="sr-only">Toggle navigation menu</span>
+          </Button>
+        </SheetTrigger>
+        <SheetContent side="left" className="flex flex-col">
+          <nav className="grid gap-2 text-lg font-medium">
+            <Link
+              href="/"
+              className="flex items-center gap-2 text-lg font-semibold"
+            >
+              <span className="p-1.5 font-logo text-primary text-3xl font-bold">Docto-Rdv</span>
+            </Link>
+            {sidebarLinks.map((item, index) => {
+              const Icon = item.icon
+              return (
+                <Link
+                  key={index}
+                  href={item.path}
+                  className={cn("flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary",
+                  pathname === item.path ? "bg-muted text-primary" : ""
+                  )}
+                >
+                  <Icon className="w-5 h-5"/>
+                  {item.name}
+                  {item.badgeCount &&                                 
+                      <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+                          {item.badgeCount}
+                      </Badge>
+                  }
+                </Link>
+              )
+            })}
             <button
-              type="button"
-              className="inline-flex items-center justify-center p-2 text-gray-400 bg-white rounded-lg hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+              onClick={handleLogout}
+              className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-muted-foreground transition-all hover:text-primary"
             >
-              {/* <AlignJustify className="w-6 h-6" /> */}
+              <LogOut className="w-5 h-5"/>
+              Déconnexion
             </button>
+          </nav>
+        </SheetContent>
+      </Sheet>
+      <div className="w-full flex-1">
+        <form>
+          <div className="relative">
+            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="search"
+              placeholder="Search products..."
+              className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
+            />
           </div>
- 
-          <div className="flex ml-6 xl:ml-0">
-            <div className="flex items-center flex-shrink-0">
-                <a href="#" className="-m-1.5 p-1.5 font-logo text-primary text-3xl font-bold">
-                    <span className="sr-only">Docto-Rdv</span>
-                    Docto-Rdv
-                </a>
-
-            </div>
-          </div>
- 
-          <div className="flex-1 hidden max-w-xs ml-40 mr-auto lg:block">
-            <label htmlFor="" className="sr-only">
-              {" "}
-              Search{" "}
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <Search className="w-5 h-5 text-gray-400" />
-              </div>
- 
-              <input
-                type="search"
-                name=""
-                id=""
-                className="block w-full py-2 pl-10 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary sm:text-sm"
-                placeholder="Type to search"
-              />
-            </div>
-          </div>
- 
-          <div className="flex items-center justify-end ml-auto space-x-2">
-            <div className="relative">
-              <button
-                type="button"
-                className="p-1 text-gray-700 transition-all duration-200 bg-white rounded-full hover:text-gray-900 focus:outline-none hover:bg-gray-100"
-              >
-                <Mail className="w-6 h-6" />
-              </button>
-              <span className="inline-flex items-center px-1.5 absolute -top-px -right-1 py-0.5 rounded-full text-xs font-semibold bg-primary text-white">
-                {" "}
-                2{" "}
-              </span>
-            </div>
- 
-            <div className="relative">
-              <button
-                type="button"
-                className="p-1 text-gray-700 transition-all duration-200 bg-white rounded-full hover:text-gray-900 focus:outline-none hover:bg-gray-100"
-              >
-                <Bell className="w-6 h-6" />
-              </button>
-            </div>
- 
-            <Dropdown
-              arrowIcon={false}
-              inline
-              label={
-                <Avatar
-                  alt="User settings"
-                  img="/doctor.jpg"
-                  rounded
-                />
-              }
-            >
-              <Dropdown.Header>
-                <span className="block text-sm">John</span>
-                <span className="block truncate text-sm font-medium">
-                  john.doe@email.com
-                </span>
-              </Dropdown.Header>
-              <Dropdown.Item>Dashboard</Dropdown.Item>
-              <Dropdown.Item>Settings</Dropdown.Item>
-              <Dropdown.Item>Earnings</Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
-            </Dropdown>
-          </div>
-        </div>
+        </form>
       </div>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="secondary" size="icon" className="rounded-full">
+            <CircleUser className="h-5 w-5" />
+            <span className="sr-only">Toggle user menu</span>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Mon compte</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>
+            <Link href="/dashboard/settings" className="flex items-center">
+              <Settings className="mr-2 h-4 w-4" />
+              Paramètres
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={handleLogout}>
+              <LogOut className="mr-2 h-4 w-4" />
+              Déconnexion
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </header>
   );
 }
