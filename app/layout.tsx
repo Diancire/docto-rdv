@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Outfit, Caveat } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/Providers";
+import { ThemeProvider } from "@/components/ThemeProvider"
 
 const outfit = Outfit({ 
   subsets: ["latin"],
@@ -26,10 +27,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={`${outfit.variable} ${caveat.variable}`}>
+    <html lang="fr" className={`${outfit.variable} ${caveat.variable}`} suppressHydrationWarning>
       <body>
         <Providers>
-          {children}
+          <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
         </Providers>
       </body>
     </html>

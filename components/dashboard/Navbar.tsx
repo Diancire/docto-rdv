@@ -10,6 +10,7 @@ import { Badge } from "../ui/badge";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Input } from "../ui/input";
 import { cn } from '@/lib/utils';
+import ModeToggle from "../ModeToggle";
  
 export default function Navbar() {
   const router = useRouter();
@@ -108,6 +109,7 @@ export default function Navbar() {
           </div>
         </form>
       </div>
+      <ModeToggle/>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="secondary" size="icon" className="rounded-full">
