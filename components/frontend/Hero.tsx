@@ -20,7 +20,7 @@ function Hero() {
             <div className="lg:py-24">
                 <h2 className="text-3xl font-bold sm:text-4xl">Trouvez vos médecins et fixez vos rendez-vous en un clin d'œil avec <span className='font-logo text-primary text-4xl'>Docto-Rdv </span>!</h2>
 
-                <p className="mt-4 text-gray-600">
+                <p className="mt-4 text-gray-600 dark:text-slate-100">
                 Facilitez la prise de rendez-vous médicaux avec Docto-Rdv ! Localisez rapidement vos médecins et planifiez vos consultations en toute simplicité. Simplifiez votre accès aux soins médicaux dès maintenant !
                 </p>
                 <SearchBar/>
@@ -29,8 +29,8 @@ function Hero() {
                 </Button>
                 <div className="flex items-center justify-center mt-10 space-x-6 lg:justify-start sm:space-x-8">
                     <div className="flex items-center">
-                        <p className="text-3xl font-medium text-gray-900 sm:text-4xl font-pj">800</p>
-                        <p className="ml-3 text-sm text-gray-900 font-pj">Spécialistes<br />Actifs</p>
+                        <p className="text-3xl font-medium text-gray-900 dark:text-white sm:text-4xl font-pj">800</p>
+                        <p className="ml-3 text-sm text-gray-900 dark:text-white font-pj">Spécialistes<br />Actifs</p>
                     </div>
                     <div className="hidden sm:block">
                         <svg className="text-gray-400" width="16" height="39" viewBox="0 0 16 39" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -42,8 +42,8 @@ function Hero() {
                         </svg>
                     </div>
                     <div className="flex items-center">
-                        <p className="text-3xl font-medium text-gray-900 sm:text-4xl font-pj">2 000</p>
-                        <p className="ml-3 text-sm text-gray-900 font-pj">Patients<br />Actifs</p>
+                        <p className="text-3xl font-medium text-gray-900 dark:text-white sm:text-4xl font-pj">2 000</p>
+                        <p className="ml-3 text-sm text-gray-900 dark:text-white font-pj">Patients<br />Actifs</p>
                     </div>
                 </div>
             </div>
