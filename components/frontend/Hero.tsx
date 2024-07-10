@@ -18,7 +18,7 @@ function Hero() {
                 />
             </div>
             <div className="lg:py-24">
-                <h2 className="text-3xl font-bold sm:text-4xl">Trouvez vos médecins et fixez vos rendez-vous en un clin d'œil avec <span className='font-logo text-primary text-4xl'>Docto-Rdv </span>!</h2>
+                <h1>Trouvez vos médecins et fixez vos rendez-vous en un clin d'œil avec <span className='font-logo text-primary'>Docto-Rdv </span>!</h1>
 
                 <p className="mt-4 text-gray-600 dark:text-slate-100">
                 Facilitez la prise de rendez-vous médicaux avec Docto-Rdv ! Localisez rapidement vos médecins et planifiez vos consultations en toute simplicité. Simplifiez votre accès aux soins médicaux dès maintenant !
