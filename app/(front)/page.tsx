@@ -9,7 +9,7 @@ export default function Home() {
       <Hero/>
       <TabbedSection/>
       <DoctorList title="Téléconsultation généraliste"/>
-      <DoctorList className="bg-white px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16" title="Consultation en présentiel" isInPerson={true}/>
+      <DoctorList className="bg-white dark:bg-slate-950 px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16" title="Consultation en présentiel" isInPerson={true}/>
     </main>
   );
 }
