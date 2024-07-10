@@ -1,18 +1,13 @@
 "use client"
-import { Fragment, useState } from 'react'
-import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react'
+import { useState } from 'react'
+import { Dialog, Popover } from '@headlessui/react'
 import {
-  ArrowPathIcon,
   Bars3Icon,
-  ChartPieIcon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
-  SquaresPlusIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
-import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
 import { Button } from "@/components/ui/button"
 import Link from 'next/link'
+import ModeToggle from '../ModeToggle'
 
 function classNames(...classes:any) {
   return classes.filter(Boolean).join(' ')
@@ -22,7 +17,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <header className="fixed top-0 bg-white w-full z-10 shadow-sm">
+    <header className="fixed top-0 bg-white dark:bg-slate-950 w-full z-10 shadow-sm">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
           <a href="/" className="-m-1.5 p-1.5 font-logo text-primary text-3xl font-bold">
@@ -41,27 +36,28 @@ export default function Navbar() {
           </button>
         </div>
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
-          <a href="/" className="text-base font-semibold leading-6 text-gray-900 hover:text-primary">
+          <a href="/" className="text-base font-semibold leading-6 text-gray-900 dark:text-gray-400 hover:text-primary dark:hover:text-gray-100">
             Accueil
           </a>
-          <a href="#" className="text-base font-semibold leading-6 text-gray-900 hover:text-primary">
+          <a href="#" className="text-base font-semibold leading-6 text-gray-900 dark:text-gray-400 hover:text-primary dark:hover:text-gray-100">
             Explorer
           </a>
-          <a href="#" className="text-base font-semibold leading-6 text-gray-900 hover:text-primary">
+          <a href="#" className="text-base font-semibold leading-6 text-gray-900 dark:text-gray-400 hover:text-primary dark:hover:text-gray-100">
             Contact
           </a>
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <Button>
+          <Button className='mr-4'>
             <a href="/login">
-              Connexion <span aria-hidden="true">&rarr;</span>
+              Connexion
             </a>
           </Button>
+          <ModeToggle/>
         </div>
       </nav>
       <Dialog className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
         <div className="fixed inset-0 z-10" />
-        <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white dark:bg-slate-950 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <a href="#" className="-m-1.5 p-1.5 font-logo text-primary text-3xl font-bold">
               <span className="sr-only">Docto-Rdv</span>
@@ -81,19 +77,19 @@ export default function Navbar() {
               <div className="space-y-2 py-6">
                 <a
                   href="/"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 hover:text-primary"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-inherit hover:text-primary dark:hover:text-gray-100"
                 >
                   Accueil
                 </a>
                 <a
                   href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 hover:text-primary"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-inherit hover:text-primary dark:hover:text-gray-100"
                 >
                   Explorer
                 </a>
                 <a
                   href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 hover:text-primary"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-inherit hover:text-primary dark:hover:text-gray-100"
                 >
                   Contact
                 </a>
@@ -107,6 +103,7 @@ export default function Navbar() {
                   </Link>
                 </Button>
               </div>
+              <ModeToggle/>
             </div>
           </div>
         </Dialog.Panel>
