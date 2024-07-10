@@ -41,7 +41,7 @@ function Footer() {
     ]
 
     return (
-        <footer className="text-gray-500 bg-white px-4 py-5 max-w-screen-xl mx-auto md:px-8">
+        <footer className="text-gray-500 bg-white dark:bg-slate-950 px-4 py-5 max-w-screen-xl mx-auto md:px-8">
             <div className="gap-6 justify-between md:flex">
                 <div className="flex-1">
                     <div className="max-w-xs">
@@ -49,7 +49,7 @@ function Footer() {
                             <span className="sr-only">Docto-Rdv</span>
                             Docto-Rdv
                         </a>
-                        <p className="leading-relaxed mt-2 text-[15px]">
+                        <p className="leading-relaxed mt-2 text-[15px] dark:text-slate-100">
                             Plateforme de prise de rendez-vous médical en ligne, facilitant la connexion entre patients et professionnels de santé.
                         </p>
                     </div>
@@ -61,7 +61,7 @@ function Footer() {
                                 className="space-y-4 md:pl-14"
                                 key={idx}
                             >
-                                <h4 className="text-gray-800 font-medium">
+                                <h4 className="text-gray-800 font-medium dark:text-slate-100">
                                     { item.label }
                                 </h4>
                                 {
@@ -69,7 +69,7 @@ function Footer() {
                                         <li key={idx}>
                                             <a 
                                                 href={el.href}
-                                                className="hover:underline hover:text-primary"
+                                                className="hover:underline dark:text-gray-400 hover:text-primary dark:hover:text-gray-100"
                                             
                                             >
                                                 { el.name }
